@@ -7,7 +7,7 @@ terraform {
   }
      backend "s3" {
        bucket = "raja-peta-cloud" #bucket name it should be crated maually before
-        key    = "raja-Expense-module-bastion"
+        key    = "raja-Expense-module-db"
         region = "us-east-1"
         dynamodb_table = "SG-locking" #locking
   } 

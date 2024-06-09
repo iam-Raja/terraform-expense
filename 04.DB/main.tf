@@ -31,6 +31,9 @@ module "db" {
             Name="${var.project_name}-${var.environment}"
         }
     )
+  manage_master_user_password = false
+  password = "Rajapetacloud"
+  skip_final_snapshot = true
     
   
 
@@ -61,4 +64,27 @@ module "db" {
       ]
     },
   ]
+}
+
+
+## Creating R53 for RDS endpoint
+
+module "records" {
+  source  = "terraform-aws-modules/route53/aws//modules/records"
+  version = "~> 2.0"
+
+  zone_name = var.zone_name
+
+  records = [
+    {
+      name    = "db"
+      type    = "CNAME"
+      ttl=1
+    records = [
+        module.db.db_instance_address
+      ]
+      }
+    
+  ]
+  
 }
